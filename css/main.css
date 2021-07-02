@@ -58,3 +58,21 @@ table {
   margin: 0;
   padding: 0;
 }
+
+.playground {
+  display: grid;
+  grid-template-columns: repeat(3, 5rem);
+  gap: 1em;
+}
+
+.cell {
+  width: 5rem;
+  height: 5rem;
+  line-height: 5rem;
+  font-size: 4rem;
+  text-align: center;
+  border-width: 0.1rem;
+  border-style: solid;
+  border-color: black;
+  border-radius: 1rem;
+}
