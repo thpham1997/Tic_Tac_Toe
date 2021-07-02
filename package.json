@@ -1,0 +1,25 @@
+{
+  "name": "cloned_tic_tac_toe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start-coding": "git checkout main && git pull",
+    "scss": " sass --watch ./scss/main.scss:./css/main.css --no-source-map"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thpham1997/Tic_Tac_Toe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thpham1997/Tic_Tac_Toe/issues"
+  },
+  "homepage": "https://github.com/thpham1997/Tic_Tac_Toe#readme",
+  "dependencies": {
+    "sass": "^1.35.1",
+    "scss": "^0.2.4"
+  }
+}
