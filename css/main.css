@@ -76,3 +76,21 @@ table {
   border-color: black;
   border-radius: 1rem;
 }
+
+.control-panel__score {
+  width: 10rem;
+  height: 10rem;
+  border-style: solid;
+  border-color: black;
+  border-width: 0.1rem;
+  display: grid;
+  grid-template-columns: repeat(2, 3rem);
+  column-gap: 2rem;
+  place-content: center;
+}
+.control-panel__score * {
+  width: 3rem;
+  height: 5rem;
+  background-color: bisque;
+  color: black;
+}
