@@ -1,5 +1,7 @@
 .playground{
   display: grid;
-  grid-template-columns: repeat(3, 5rem);
-  gap: 1em;
+  grid-template-columns: repeat(3, 7rem);
+  gap: 1rem;
+  place-content: center;
+
 }
