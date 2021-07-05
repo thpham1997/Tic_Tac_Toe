@@ -1,4 +1,7 @@
 @use 'reset';
+@use 'header';
 @use 'playground';
-@use  'cell';
-@use 'control-panel__score';
+@use 'cell';
+@use '_main';
+@use 'color';
+@use 'control-panel';
