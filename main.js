@@ -1,95 +1,95 @@
 
 // game board object
 const gameBoard = (() => {
-  const PLAYGROUND = document.querySelector('.playground');
-  let board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+  // PRIVATE
 
-  function _markSpot(e, players) {
-    console.log(e.target.getAttribute('data-taken') === 'true');
-    if (e.target.getAttribute('data-taken') === 'false') {
-      e.target.textContent = players[0].getTurn() ? players[0].getChoice() : players[1].getChoice();
-      board[e.target.getAttribute('data-index')] = e.target.textContent;
-      e.target.setAttribute('data-taken', true);
-    }
-    console.log(board);
-  }
-  function getBoard() {
-    return board;
-  }
-  function display(controler, players) {
-    for (let i = 0; i < board.length; i++) {
-      let cellDiv = document.createElement('div');
-      cellDiv.addEventListener('click', (e) => {
-        console.log('event run');
-        _markSpot(e, players);
-        controler.switchTurn(players[0], players[1]);
-        controler.setResult(controler.checkGame(board));
-        console.log(controler.getResult());
-      });
-      cellDiv.classList.add('cell');
-      cellDiv.textContent = board[i];
-      cellDiv.setAttribute('data-index', i);
-      cellDiv.setAttribute('data-taken', false);
-      PLAYGROUND.appendChild(cellDiv);
-    }
-  }
-
-  // function
-  return { display };
-})();
-
-// controler object
-const controler = (() => {
-  const PLAYER_SCORE = document.getElementsByClassName('control-panel__score__player');
-  const COMP_SCORE = document.getElementsByClassName('control-panel__score__comp');
-
-  function checkGame(board) {
-    // vertical and horizontal check 'X'
-    if (board[0] === board[1] && board[0] === board[2] && board[0] === 'X') return 'X';
-    else if (board[0] === board[3] && board[0] === board[6] && board[0] === 'X') return 'X';
-    else if (board[1] === board[4] && board[1] === board[7] && board[1] === 'X') return 'X';
-    else if (board[2] === board[5] && board[2] === board[8] && board[2] === 'X') return 'X';
-    else if (board[3] === board[4] && board[3] === board[5] && board[3] === 'X') return 'X';
-    else if (board[6] === board[7] && board[6] === board[8] && board[6] === 'X') return 'X';
+  // PUBLIC
+  function checkBoard() {
+    if (this.board[0] === this.board[1] && this.board[0] === this.board[2] && this.board[0] === 'X') return 'X';
+    else if (this.board[0] === this.board[3] && this.board[0] === this.board[6] && this.board[0] === 'X') return 'X';
+    else if (this.board[1] === this.board[4] && this.board[1] === this.board[7] && this.board[1] === 'X') return 'X';
+    else if (this.board[2] === this.board[5] && this.board[2] === this.board[8] && this.board[2] === 'X') return 'X';
+    else if (this.board[3] === this.board[4] && this.board[3] === this.board[5] && this.board[3] === 'X') return 'X';
+    else if (this.board[6] === this.board[7] && this.board[6] === this.board[8] && this.board[6] === 'X') return 'X';
 
     // vertical and horizontal check '0'
-    else if (board[0] === board[1] && board[0] === board[2] && board[0] === 'O') return 'O';
-    else if (board[0] === board[3] && board[0] === board[6] && board[0] === 'O') return 'O';
-    else if (board[1] === board[4] && board[1] === board[7] && board[1] === 'O') return 'O';
-    else if (board[2] === board[5] && board[2] === board[8] && board[2] === 'O') return 'O';
-    else if (board[3] === board[4] && board[3] === board[5] && board[3] === 'O') return 'O';
-    else if (board[6] === board[7] && board[6] === board[8] && board[6] === 'O') return 'O';
+    else if (this.board[0] === this.board[1] && this.board[0] === this.board[2] && this.board[0] === 'O') return 'O';
+    else if (this.board[0] === this.board[3] && this.board[0] === this.board[6] && this.board[0] === 'O') return 'O';
+    else if (this.board[1] === this.board[4] && this.board[1] === this.board[7] && this.board[1] === 'O') return 'O';
+    else if (this.board[2] === this.board[5] && this.board[2] === this.board[8] && this.board[2] === 'O') return 'O';
+    else if (this.board[3] === this.board[4] && this.board[3] === this.board[5] && this.board[3] === 'O') return 'O';
+    else if (this.board[6] === this.board[7] && this.board[6] === this.board[8] && this.board[6] === 'O') return 'O';
 
     // tie 
-    else if (board.every(element => element !== ' ')) return 'tie';
+    else if (this.board.every(element => element !== ' ')) return 'tie';
 
     // not finisd and no one wins
 
     else return 'undone';
   }
 
-  function setResult(result) {
-    this.result = result
+  function getBoard() {
+    return this.board;
   }
-  function getResult() {
-    return this.result;
+  function setBoard(board) {
+    this.board = board;
   }
 
+  function markSpot(index, markSign) {
+    this.board[index] = markSign;
+  }
+  function reset() {
+    this.board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '];
+  }
+
+
+  // function
+  return { getBoard, setBoard, markSpot, checkBoard, reset };
+})();
+
+// controler object
+const controler = (() => {
+  // PRIVATE
+
+  // PUBLIC
+  function SetChoicesToPlayers(player1, player2, choice1, choice2) {
+    player1.setChoice(choice1);
+    player2.setChoice(choice2);
+  }
   function switchTurn(player1, player2) {
     player1.setTurn(!player1.getTurn());
     player2.setTurn(!player2.getTurn());
   }
 
-  function display(players) {
-    console.log('run');
-    PLAYER_SCORE.textContent = players[0].getScore();
-    COMP_SCORE.textContent = players[1].getScore();
+  function upgradeScore(board, player1, player2) {
+    if (board.checkBoard() === 'X' && player1.getChoice() === 'X') {
+      player1.setScore(player1.getScore() + 1);
+    } else if (board.checkBoard() === 'X' && player2.getChoice() === 'X') {
+      player2.setScore(player2.getScore() + 1);
+    } else if (board.checkBoard() === 'O' && player1.getChoice() === 'O') {
+      player1.setScore(player1.getScore() + 1);
+    } else if (board.checkBoard() === 'O' && player2.getChoice() === 'O') {
+      player2.setScore(player2.getScore() + 1);
+    } document.getElementsByClassName('cell');
   }
-  return { display, switchTurn, setResult, getResult, checkGame };
+
+  function reset(gameboard, player1, player2) {
+    player1.reset();
+    player2.reset();
+    gameBoard.reset();
+  }
+
+  return { switchTurn, upgradeScore, SetChoicesToPlayers, reset };
 })();
 
 // player object
-const player = (name) => {
+const player = () => {
+  function setName(name) {
+    this.name = name;
+  }
+  function getName() {
+    return this.name;
+  }
   function setChoice(choice) {
     this.choice = choice;
   }
@@ -108,15 +108,108 @@ const player = (name) => {
   function getScore() {
     return this.score;
   }
-  return { setChoice, getChoice, setTurn, getTurn, setScore, getScore };
+  function reset() {
+    this.name = ''
+    this.choice = '';
+    this.score = 0;
+    this.turn = undefined;
+  }
+  return { setName, getName, setChoice, getChoice, setTurn, getTurn, setScore, getScore, reset };
 }
-let player1 = player('thanh');
+
+const display = (() => {
+  const PLAYGROUND = document.querySelector('.playground');
+  const PLAYER_SCORE = document.querySelector('.control-panel__score__player');
+  const COMP_SCORE = document.querySelector('.control-panel__score__comp');
+  const TURN = document.querySelector('.control-panel__score').firstChild;
+  const BTN_RESET = document.querySelector('.control-panel__reset__btn');
+  const BTN_X = document.querySelector('.control-panel__choices__x');
+  const BTN_O = document.querySelector('.control-panel__choices__o');
+  // PRIVATE
+  function _result(gameBoard, player1, player2) {
+    let result = gameBoard.checkBoard();
+    if (result === player1.getChoice()) player1.setScore(player1.getScore() + 1);
+    if (result === player2.getChoice()) player2.setScore(player2.getScore() + 1);
+    displayControler(player1, player2);
+  }
+  // PUBLIC
+  function displayControler(player1, player2) {
+    PLAYER_SCORE.textContent = player1.getScore();
+    COMP_SCORE.textContent = player2.getScore();
+    TURN.innerText = `TURN: ${player1.getTurn() ? player1.getName() : player2.getName()}`;
+  }
+  function displayCells(gameBoard) {
+    let board = gameBoard.getBoard();
+    while (PLAYGROUND.childElementCount > 0) {
+      PLAYGROUND.removeChild(PLAYGROUND.firstChild);
+    }
+    for (let i = 0; i < board.length; i++) {
+      let cell = document.createElement('div');
+      cell.classList.add('cell');
+      cell.setAttribute('data-index', i);
+      cell.setAttribute('data-taken', false);
+      cell.textContent = board[i];
+      PLAYGROUND.appendChild(cell);
+    }
+  }
+  function addEventToCells(gameBoard, controler, player1, player2) {
+    let cells = document.getElementsByClassName('cell');
+    for (let i = 0; i < cells.length; i++) {
+      cells[i].addEventListener('click', (e) => {
+        if (e.target.getAttribute('data-taken') === 'false') {
+          let index = Number(e.target.getAttribute('data-index'));
+          cells[i].textContent = player1.getTurn() ? player1.getChoice() : player2.getChoice();
+          controler.switchTurn(player1, player2);
+          e.target.setAttribute('data-taken', true);
+          gameBoard.markSpot(index, e.target.textContent);
+          _result(gameBoard, player1, player2);
+        }
+      });
+    }
+  }
+
+  function addEventToBtn(gameBoard, player1, player2) {
+    BTN_RESET.addEventListener('click', (e) => {
+      controler.reset(gameBoard, player1, player2);
+      displayCells(gameBoard);
+      displayControler(player1, player2);
+    })
+    BTN_X.addEventListener('click', (e) => {
+      if (player1.getTurn()) {
+        player1.setChoice('X');
+        player2.setChoice('O');
+      } else {
+        player2.setChoice('X');
+        player1.setChoice('O');
+      }
+    })
+    BTN_O.addEventListener('click', (e) => {
+      if (player1.getTurn()) {
+        player1.setChoice('O');
+        player2.setChoice('X');
+      } else {
+        player2.setChoice('O');
+        player1.setChoice('X');
+      }
+    })
+  }
+
+  return { displayCells, displayControler, addEventToCells, addEventToBtn };
+})();
+
+
+let player1 = player();
+player1.setName('thanh');
 player1.setChoice('X');
 player1.setTurn(true);
 player1.setScore(0);
-let player2 = player('comp');
+let player2 = player();
+player2.setName('comp');
 player2.setChoice('O');
 player2.setTurn(false);
 player2.setScore(0);
-gameBoard.display(controler, [player1, player2]);
-controler.display([player1, player2]);
+gameBoard.reset()
+display.displayCells(gameBoard);
+display.addEventToCells(gameBoard, controler, player1, player2);
+display.addEventToBtn(gameBoard, player1, player2);
+display.displayControler(player1, player2);
