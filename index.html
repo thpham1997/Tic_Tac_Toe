@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,13 +9,40 @@
   <script src="main.js" defer></script>
   <title>Tic Tac Toe</title>
 </head>
+
 <body>
   <header><span>Tic Tac Toe</span></header>
   <main>
     <div class="control-panel">
       <div class="control-panel__choices">
-        <button class="control-panel__choices__x" value="X">X</button>
-        <button class="control-panel__choices__o" value="O">O</button>
+        <p>Player 1 will choose your mark sign here:</p>
+        <label for="x_mark">
+          <input id="x_mark" type="radio" class="control-panel__choices__mark" name="mark" checked> X
+        </label>
+        
+        <label for="o_mark">
+          <input id="o_mark" type="radio" class="control-panel__choices__mark" name="mark" > O
+        </label>
+
+        <label for="x_name">Name for X choice
+          <input id="x_name" type="text" class="control-panel__choices__name" name="name">
+        </label>
+
+        <label for="o_name">Name for O choice
+          <input id="o_name" type="text" class="control-panel__choices__name" name="name">
+        </label>
+
+        <p>Who's gonna go first?</p>
+        
+        <label for="x_turn">
+          <input id="x_turn" type="radio" class="control-panel__choices__turn" name="turn" checked> Player 1 first
+        </label>
+        
+        <label for="o_turn">
+          <input id="o_turn" type="radio" class="control-panel__choices__turn" name="turn"> Player 2 first
+        </label>
+
+        <button class="confirm">Start</button>
       </div>
       <div class="control-panel__score">
         <p>Turn: </p>
@@ -27,8 +55,9 @@
     </div>
 
     <div class="playground">
-      
+
     </div>
   </main>
 </body>
+
 </html>
