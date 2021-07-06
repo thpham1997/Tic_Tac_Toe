@@ -71,15 +71,15 @@ header {
 
 .playground {
   display: grid;
-  grid-template-columns: repeat(3, 7rem);
+  grid-template-columns: repeat(3, 10rem);
   gap: 1rem;
   place-content: center;
 }
 
 .cell {
-  width: 7rem;
-  height: 7rem;
-  line-height: 7rem;
+  width: 10rem;
+  height: 10rem;
+  line-height: 10rem;
   font-size: 4rem;
   text-align: center;
   border-width: 0.1rem;
@@ -113,23 +113,48 @@ body {
 .control-panel__score {
   width: 10rem;
   height: 10rem;
-  margin: 0 5rem;
+  margin: 1rem auto;
   border-style: solid;
   border-color: black;
   border-width: 0.1rem;
-  display: grid;
-  grid-template-columns: repeat(2, 3rem);
-  column-gap: 2rem;
-  place-content: center;
 }
 .control-panel__score * {
-  width: 3rem;
-  height: 5rem;
+  margin: 1rem 0.5rem;
   color: black;
 }
-.control-panel__score p {
+
+label {
   display: block;
+  color: white;
+  margin: 0.5rem auto;
+  text-align: center;
 }
-.control-panel__score__turn {
-  display: inline-block;
+label .control-panel__choices__name {
+  display: block;
+  height: 2rem;
+  width: 15rem;
+  margin: 0.4rem auto;
+  border-radius: 0.5rem;
+  text-indent: 0.2rem;
+}
+
+.control-panel__choices__mark {
+  margin: 0.2rem auto;
+}
+
+.control-panel__choices__turn {
+  margin: 0.2rem auto;
+}
+
+.confirm {
+  display: block;
+  margin: 0.2rem auto;
+}
+
+.control-panel__reset {
+  margin: 1rem auto;
+}
+.control-panel__reset__btn {
+  display: block;
+  margin: 0.2rem auto;
 }
