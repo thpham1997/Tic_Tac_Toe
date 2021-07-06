@@ -121,10 +121,12 @@ const display = (() => {
   const PLAYGROUND = document.querySelector('.playground');
   const PLAYER_SCORE = document.querySelector('.control-panel__score__player');
   const COMP_SCORE = document.querySelector('.control-panel__score__comp');
-  const TURN = document.querySelector('.control-panel__score').firstChild;
+  const TEXT_TURN = document.querySelector('.control-panel__score').children[0];
   const BTN_RESET = document.querySelector('.control-panel__reset__btn');
-  const BTN_X = document.querySelector('.control-panel__choices__x');
-  const BTN_O = document.querySelector('.control-panel__choices__o');
+  const MARKS = document.querySelectorAll('.control-panel__choices__mark');
+  const TURNS = document.querySelectorAll('.control-panel__choices__turn');
+  const NAMES = document.querySelectorAll('.control-panel__choices__name');
+  const BTN_CONFIRM = document.querySelector('.confirm');
   // PRIVATE
   function _result(gameBoard, player1, player2) {
     let result = gameBoard.checkBoard();
@@ -134,9 +136,9 @@ const display = (() => {
   }
   // PUBLIC
   function displayControler(player1, player2) {
-    PLAYER_SCORE.textContent = player1.getScore();
-    COMP_SCORE.textContent = player2.getScore();
-    TURN.innerText = `TURN: ${player1.getTurn() ? player1.getName() : player2.getName()}`;
+    PLAYER_SCORE.textContent = player1.getName() + ': \t' + player1.getScore();
+    COMP_SCORE.textContent = player2.getName() + ': \t' + player2.getScore();
+    TEXT_TURN.innerHTML = `TURN: ${player1.getTurn() ? player1.getName() : player2.getName()}`;
   }
   function displayCells(gameBoard) {
     let board = gameBoard.getBoard();
@@ -168,29 +170,33 @@ const display = (() => {
     }
   }
 
-  function addEventToBtn(gameBoard, player1, player2) {
+  function addEventToBtn(gameBoard, controler, player1, player2) {
     BTN_RESET.addEventListener('click', (e) => {
       controler.reset(gameBoard, player1, player2);
       displayCells(gameBoard);
       displayControler(player1, player2);
+      addEventToCells(gameBoard, controler, player1, player2);
+      BTN_CONFIRM.disabled =false;
     })
-    BTN_X.addEventListener('click', (e) => {
-      if (player1.getTurn()) {
+    BTN_CONFIRM.addEventListener('click', (e) => {
+      if (MARKS[0].checked) {
         player1.setChoice('X');
         player2.setChoice('O');
       } else {
-        player2.setChoice('X');
         player1.setChoice('O');
+        player2.setChoice('X');
       }
-    })
-    BTN_O.addEventListener('click', (e) => {
-      if (player1.getTurn()) {
-        player1.setChoice('O');
-        player2.setChoice('X');
+      player1.setName(NAMES[0].value);
+      player2.setName(NAMES[1].value);
+      if (TURNS[0].checked) {
+        player1.setTurn(true);
+        player2.setTurn(false);
       } else {
-        player2.setChoice('O');
-        player1.setChoice('X');
+        player1.setTurn(false);
+        player2.setTurn(true);
       }
+      displayControler(player1, player2);
+      e.target.disabled = true;
     })
   }
 
@@ -199,17 +205,17 @@ const display = (() => {
 
 
 let player1 = player();
-player1.setName('thanh');
+player1.setName('default 1');
 player1.setChoice('X');
 player1.setTurn(true);
 player1.setScore(0);
 let player2 = player();
-player2.setName('comp');
+player2.setName('default 2');
 player2.setChoice('O');
 player2.setTurn(false);
 player2.setScore(0);
 gameBoard.reset()
 display.displayCells(gameBoard);
 display.addEventToCells(gameBoard, controler, player1, player2);
-display.addEventToBtn(gameBoard, player1, player2);
+display.addEventToBtn(gameBoard, controler, player1, player2);
 display.displayControler(player1, player2);
