@@ -1,0 +1,16 @@
+label {
+  display: block;
+  color: white;
+  margin: 0.5rem auto;
+  text-align: center;
+
+  & .control-panel__choices__name{
+    display: block;
+    height: 2rem;
+    width: 15rem;
+    margin: 0.4rem auto;
+    border-radius: 0.5rem;
+    text-indent: 0.2rem;
+  }
+  
+}
