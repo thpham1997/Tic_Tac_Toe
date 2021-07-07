@@ -1,11 +1,13 @@
 .control-panel{
   border-color: black;
   border-width: 0.1rem;
-  border-style: dashed;
+  border-style: solid;
+  border-radius: 2rem;
   position: relative;
   padding: 1rem 1rem;
   background: inherit;
   height: 100%;
+  color: white;
   &__score{
     width: 10rem;
     height: 10rem;
@@ -13,10 +15,11 @@
     border-style: solid;
     border-color: black;
     border-width: 0.1rem;
+    border-radius: 1rem;
     & *{
       // background-color: bisque;
       margin: 1rem 0.5rem;
-      color: black;
+      color: grey;
     }
   }
 }
