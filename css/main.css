@@ -94,6 +94,7 @@ main {
   grid-template-columns: 3fr 7fr;
   width: 100%;
   height: 90%;
+  padding: 0 2rem 1rem 2rem;
 }
 
 body {
@@ -104,11 +105,13 @@ body {
 .control-panel {
   border-color: black;
   border-width: 0.1rem;
-  border-style: dashed;
+  border-style: solid;
+  border-radius: 2rem;
   position: relative;
   padding: 1rem 1rem;
   background: inherit;
   height: 100%;
+  color: white;
 }
 .control-panel__score {
   width: 10rem;
@@ -117,10 +120,11 @@ body {
   border-style: solid;
   border-color: black;
   border-width: 0.1rem;
+  border-radius: 1rem;
 }
 .control-panel__score * {
   margin: 1rem 0.5rem;
-  color: black;
+  color: grey;
 }
 
 label {
@@ -157,4 +161,9 @@ label .control-panel__choices__name {
 .control-panel__reset__btn {
   display: block;
   margin: 0.2rem auto;
+}
+
+.continue {
+  display: block;
+  margin: 0.4rem auto;
 }
