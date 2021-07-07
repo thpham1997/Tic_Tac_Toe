@@ -5,20 +5,27 @@ const gameBoard = (() => {
 
   // PUBLIC
   function checkBoard() {
+    // vertical and horizontal check 'X'
     if (this.board[0] === this.board[1] && this.board[0] === this.board[2] && this.board[0] === 'X') return 'X';
     else if (this.board[0] === this.board[3] && this.board[0] === this.board[6] && this.board[0] === 'X') return 'X';
     else if (this.board[1] === this.board[4] && this.board[1] === this.board[7] && this.board[1] === 'X') return 'X';
     else if (this.board[2] === this.board[5] && this.board[2] === this.board[8] && this.board[2] === 'X') return 'X';
     else if (this.board[3] === this.board[4] && this.board[3] === this.board[5] && this.board[3] === 'X') return 'X';
     else if (this.board[6] === this.board[7] && this.board[6] === this.board[8] && this.board[6] === 'X') return 'X';
+    // cross check 'X'
+    else if (this.board[0] === this.board[4] && this.board[0] === this.board[8] && this.board[0] === 'X') return 'X';
+    else if (this.board[2] === this.board[4] && this.board[2] === this.board[6] && this.board[2] === 'X') return 'X';
 
-    // vertical and horizontal check '0'
+    // vertical and horizontal check 'O'
     else if (this.board[0] === this.board[1] && this.board[0] === this.board[2] && this.board[0] === 'O') return 'O';
     else if (this.board[0] === this.board[3] && this.board[0] === this.board[6] && this.board[0] === 'O') return 'O';
     else if (this.board[1] === this.board[4] && this.board[1] === this.board[7] && this.board[1] === 'O') return 'O';
     else if (this.board[2] === this.board[5] && this.board[2] === this.board[8] && this.board[2] === 'O') return 'O';
     else if (this.board[3] === this.board[4] && this.board[3] === this.board[5] && this.board[3] === 'O') return 'O';
     else if (this.board[6] === this.board[7] && this.board[6] === this.board[8] && this.board[6] === 'O') return 'O';
+    // cross check 'O'
+    else if (this.board[0] === this.board[4] && this.board[0] === this.board[8] && this.board[0] === 'O') return 'O';
+    else if (this.board[2] === this.board[4] && this.board[2] === this.board[6] && this.board[2] === 'O') return 'O';
 
     // tie 
     else if (this.board.every(element => element !== ' ')) return 'tie';
@@ -127,12 +134,21 @@ const display = (() => {
   const TURNS = document.querySelectorAll('.control-panel__choices__turn');
   const NAMES = document.querySelectorAll('.control-panel__choices__name');
   const BTN_CONFIRM = document.querySelector('.confirm');
+  const BTN_CONTINUE = document.querySelector('.continue');
   // PRIVATE
   function _result(gameBoard, player1, player2) {
     let result = gameBoard.checkBoard();
     if (result === player1.getChoice()) player1.setScore(player1.getScore() + 1);
     if (result === player2.getChoice()) player2.setScore(player2.getScore() + 1);
     displayControler(player1, player2);
+    if (result === 'X' || result === 'O' || result === 'tie') {
+      console.log('end game');
+      BTN_CONTINUE.disabled = false;
+      let cells = PLAYGROUND.children;
+      for (let i = 0; i < cells.length; i++) {
+        cells[i].setAttribute('data-taken', true);
+      }
+    }
   }
   // PUBLIC
   function displayControler(player1, player2) {
@@ -158,7 +174,7 @@ const display = (() => {
     let cells = document.getElementsByClassName('cell');
     for (let i = 0; i < cells.length; i++) {
       cells[i].addEventListener('click', (e) => {
-        if (e.target.getAttribute('data-taken') === 'false') {
+        if (e.target.getAttribute('data-taken') === 'false' && (player1.getTurn() === true || player2.getTurn() === true)) {
           let index = Number(e.target.getAttribute('data-index'));
           cells[i].textContent = player1.getTurn() ? player1.getChoice() : player2.getChoice();
           controler.switchTurn(player1, player2);
@@ -176,7 +192,7 @@ const display = (() => {
       displayCells(gameBoard);
       displayControler(player1, player2);
       addEventToCells(gameBoard, controler, player1, player2);
-      BTN_CONFIRM.disabled =false;
+      BTN_CONFIRM.disabled = false;
     })
     BTN_CONFIRM.addEventListener('click', (e) => {
       if (MARKS[0].checked) {
@@ -197,6 +213,12 @@ const display = (() => {
       }
       displayControler(player1, player2);
       e.target.disabled = true;
+    })
+    BTN_CONTINUE.addEventListener('click', (e) => {
+      e.target.disabled = true;
+      gameBoard.reset();
+      displayCells(gameBoard)
+      addEventToCells(gameBoard, controler, player1, player2);
     })
   }
 
